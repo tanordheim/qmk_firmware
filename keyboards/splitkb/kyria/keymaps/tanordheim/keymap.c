@@ -25,15 +25,10 @@ enum layers {
     FN
 };
 
-enum custom_keycodes {
-    KC_I_OE = SAFE_RANGE,
-    KC_O_AE = SAFE_RANGE,
-    KC_Y_AA = SAFE_RANGE
-};
-
 #define LT_AE_O  LT(COLEMAKDH, KC_O)
 #define LT_OE_I  LT(COLEMAKDH, KC_I)
 #define LT_AA_SC LT(COLEMAKDH, KC_SCLN)
+#define DQT_SQT  LT(COLEMAKDH, KC_DQT)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -41,8 +36,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  */
     [COLEMAKDH] = LAYOUT(
-      KC_TAB,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y, LT_AA_SC,KC_BSPC,
-      KC_LSFT, KC_A,   KC_R,   KC_S,   KC_T,   KC_G,                                         KC_M,    KC_N,    KC_E,    LT_OE_I, LT_AE_O, KC_QUOT,
+      KC_TAB,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    LT_AA_SC,KC_BSPC,
+      KC_LSFT, KC_A,   KC_R,   KC_S,   KC_T,   KC_G,                                         KC_M,    KC_N,    KC_E,    LT_OE_I, LT_AE_O, DQT_SQT,
       KC_LCTL, KC_Z,   KC_X,   KC_C,   KC_D,   KC_V,    KC_LALT, XXXXXXX, XXXXXXX, MO(FN),   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RCTL,
                                KC_MEH, KC_LGUI,KC_ESC,  KC_SPC,  MO(NAV), KC_BSPC, KC_ENT,   MO(SYM), MO(NUM), KC_HYPR
     ),
@@ -103,6 +98,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return base_layer_hold_key(RALT(KC_O), record);
         case LT_AA_SC:
             return base_layer_hold_key(RALT(KC_A), record);
+        case DQT_SQT:
+            if (record->event.pressed) {
+                if (get_mods() & MOD_MASK_SHIFT) {
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    tap_code(KC_QUOT);
+                    set_mods(get_mods() | MOD_BIT(KC_LSFT));
+                } else {
+                    tap_code16(S(KC_QUOT));
+                }
+            }
+            return false;
     }
     return true;
 }
