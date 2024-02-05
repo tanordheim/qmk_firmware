@@ -22,13 +22,16 @@ enum layers {
     NAV,
     NUM,
     SYM,
-    FN
+    FN,
+    ADJ
 };
 
 #define LT_AE_O  LT(COLEMAKDH, KC_O)
 #define LT_OE_I  LT(COLEMAKDH, KC_I)
 #define LT_AA_SC LT(COLEMAKDH, KC_SCLN)
 #define DQT_SQT  LT(COLEMAKDH, KC_DQT)
+#define SS_CLP   LGUI(LCTL(LSFT(KC_4)))
+#define SS_FILE  LGUI(LSFT(KC_4))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -76,8 +79,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [FN] = LAYOUT(
       _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,                                      _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_F3,   KC_F4,   KC_F5,   KC_F11,                                      _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, _______,
-      _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______, _______, _______, _______, RGB_TOG, RGB_MOD, _______, RGB_VAI, RGB_VAD, _______,
+      _______, _______, KC_F3,   KC_F4,   KC_F5,   KC_F11,                                      SS_CLP,  _______, _______, _______, _______, _______,
+      _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______, _______, _______, _______, SS_FILE, _______, _______, _______, _______, _______,
+                                 MO(ADJ), _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+/*
+ * Adjust layer
+ */
+    [ADJ] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_VAI, RGB_VAD, RGB_MOD, RGB_TOG, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
