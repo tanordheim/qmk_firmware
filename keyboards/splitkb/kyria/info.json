@@ -6,6 +6,8 @@
         "vid": "0x8D1D",
         "device_version": "1.0.0"
     },
+    "development_board": "elite_c",
+    "pin_compatible": "elite_c",
     "split": {
         "enabled": true
     },
