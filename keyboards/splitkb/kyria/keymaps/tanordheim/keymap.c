@@ -23,15 +23,23 @@ enum layers {
     NUM,
     SYM,
     FN,
-    ADJ
+    ADJ,
+    UCD
 };
 
-#define LT_AE_O  LT(COLEMAKDH, KC_O)
-#define LT_OE_I  LT(COLEMAKDH, KC_I)
-#define LT_AA_SC LT(COLEMAKDH, KC_SCLN)
 #define DQT_SQT  LT(COLEMAKDH, KC_DQT)
+#define ESC_NAV  LT(NAV, KC_ESC)
+#define WS_L     MEH(KC_LEFT) // switch to workspace left
+#define WS_R     MEH(KC_RIGHT) // switch to workspace right
+#define WM_WS_L  HYPR(KC_LEFT) // move window to workspace left
+#define WM_WS_R  HYPR(KC_RIGHT) // move window to workspace right
 #define SS_CLP   LGUI(LCTL(LSFT(KC_4)))
 #define SS_FILE  LGUI(LSFT(KC_4))
+
+// norwegian chars
+#define NO_AE UC(0x00E6)
+#define NO_OE UC(0x00F8)
+#define NO_AA UC(0x00E5)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -39,19 +47,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  */
     [COLEMAKDH] = LAYOUT(
-      KC_TAB,  KC_Q,   KC_W,   KC_F,   KC_P,   KC_B,                                         KC_J,    KC_L,    KC_U,    KC_Y,    LT_AA_SC,KC_BSPC,
-      KC_LSFT, KC_A,   KC_R,   KC_S,   KC_T,   KC_G,                                         KC_M,    KC_N,    KC_E,    LT_OE_I, LT_AE_O, DQT_SQT,
-      KC_LCTL, KC_Z,   KC_X,   KC_C,   KC_D,   KC_V,    KC_LALT, XXXXXXX, XXXXXXX, MO(FN),   KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RCTL,
-                               KC_MEH, KC_LGUI,KC_ESC,  KC_SPC,  MO(NAV), KC_BSPC, KC_ENT,   MO(SYM), MO(NUM), KC_HYPR
+      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+      KC_LSFT, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    DQT_SQT,
+      KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    WS_L,    WM_WS_L, WM_WS_R, WS_R,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
+                                 KC_MEH,  KC_LGUI, ESC_NAV, KC_SPC,  MO(UCD), MO(FN), KC_ENT,  MO(SYM), MO(NUM),  KC_HYPR
     ),
 /*
- * Nagation layer/media
+ * Nagayer/media
  *
  */
     [NAV] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______,                                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGUP, KC_PGDN, KC_END,  _______,  _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______,  _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -59,9 +67,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  */
     [NUM] = LAYOUT(
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-      _______, KC_SLSH, KC_MINS, KC_PLUS, KC_EQL,  KC_ASTR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, KC_EQL,  _______,                                     _______, _______, KC_LPRN, KC_RPRN, KC_PERC, _______,
+      _______, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_4, KC_KP_5,                                     KC_KP_6, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_0, _______,
+      _______, _______, KC_PMNS, KC_PPLS, KC_PSLS, KC_PAST, _______, _______, _______, _______, _______, _______, KC_PCMM, KC_PDOT, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -69,27 +77,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  */
     [SYM] = LAYOUT(
-      _______, _______, KC_QUOT, KC_DQT,  KC_CIRC, KC_GRV,                                      KC_AMPR, KC_UNDS, KC_LBRC, KC_RBRC, KC_PERC, _______,
-      _______, KC_EXLM, KC_MINS, KC_PLUS, KC_EQL,  KC_PIPE,                                     KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_DLR,  _______,
-      _______, _______, KC_LT,   KC_GT,   _______, KC_ASTR, _______, _______, _______, _______, KC_TILD, KC_AT,   KC_LCBR, KC_RCBR, KC_BSLS, _______,
+      _______, _______, _______, KC_TILD, KC_GRV,  _______,                                     KC_HASH, KC_UNDS, KC_LBRC, KC_RBRC, KC_PERC, _______,
+      _______, _______, KC_EXLM, KC_PLUS, KC_EQL,  KC_PIPE,                                     KC_CIRC, KC_COLN, KC_LPRN, KC_RPRN, KC_DLR,  _______,
+      _______, _______, KC_LT,   KC_GT,   KC_AT,   KC_ASTR, _______, _______, _______, _______, KC_AMPR, KC_MINS, KC_LCBR, KC_RCBR, KC_BSLS, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
  * Fn layer
  */
     [FN] = LAYOUT(
-      _______, _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,                                      _______, _______, _______, _______, _______, _______,
-      _______, _______, KC_F3,   KC_F4,   KC_F5,   KC_F11,                                      SS_CLP,  _______, _______, _______, _______, _______,
-      _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,  _______, _______, _______, _______, SS_FILE, _______, _______, _______, _______, _______,
+      _______, KC_F12,  KC_F7,   KC_F8,   KC_F9,   _______,                                     _______, KC_MUTE, KC_MPLY, _______, _______, _______,
+      _______, KC_F11,  KC_F3,   KC_F4,   KC_F5,   _______,                                     _______, KC_VOLU, KC_VOLD, _______, _______, _______,
+      _______, KC_F10,  KC_F1,   KC_F2,   KC_F3,   _______, _______, _______, _______, _______, SS_FILE, SS_CLP,  _______, _______, _______, _______,
                                  MO(ADJ), _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
  * Adjust layer
  */
     [ADJ] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     RGB_HUI, RGB_HUD, RGB_SPI, RGB_SPD, _______, _______,
+      _______, _______, _______, _______, _______, QK_BOOT,                                     RGB_VAI, RGB_VAD, RGB_MOD, RGB_RMOD,_______, _______,
+      _______, _______, _______, _______, _______, QK_RBT,  _______, _______, _______, _______, RGB_TOG, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
+/*
+ * Unicode layer
+ */
+    [UCD] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,                                     _______, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_VAI, RGB_VAD, RGB_MOD, RGB_TOG, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, NO_AE,   NO_OE,   NO_AA,   _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 };
@@ -104,12 +121,6 @@ static inline bool base_layer_hold_key(uint16_t keycode, keyrecord_t *record) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT_AE_O:
-            return base_layer_hold_key(RALT(KC_Q), record);
-        case LT_OE_I:
-            return base_layer_hold_key(RALT(KC_O), record);
-        case LT_AA_SC:
-            return base_layer_hold_key(RALT(KC_A), record);
         case DQT_SQT:
             if (record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
@@ -178,6 +189,9 @@ static void render_status(void) {
             break;
         case ADJ:
             oled_write_P(PSTR("Adjust\n"), false);
+            break;
+        case UCD:
+            oled_write_P(PSTR("Unicode\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
