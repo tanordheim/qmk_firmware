@@ -28,7 +28,7 @@ enum layers {
 };
 
 #define DQT_SQT  LT(COLEMAKDH, KC_DQT)
-#define ESC_NAV  LT(NAV, KC_ESC)
+#define SPC_NAV  LT(NAV, KC_SPC)
 #define WS_L     MEH(KC_LEFT) // switch to workspace left
 #define WS_R     MEH(KC_RIGHT) // switch to workspace right
 #define WM_WS_L  HYPR(KC_LEFT) // move window to workspace left
@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
       KC_LSFT, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                        KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    DQT_SQT,
       KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    WS_L,    WM_WS_L, WM_WS_R, WS_R,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_LALT,
-                                 KC_MEH,  KC_LGUI, ESC_NAV, KC_SPC,  MO(UCD), MO(FN), KC_ENT,  MO(SYM), MO(NUM),  KC_HYPR
+                                 KC_MEH,  KC_LGUI, SPC_NAV, KC_ESC,  MO(UCD), MO(FN),  MO(NUM), KC_ENT,  MO(SYM), KC_HYPR
     ),
 /*
  * Nagayer/media
